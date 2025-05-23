@@ -30,7 +30,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def get_chatgpt_response(question):
-    response = client.chat.completions.create(model="gpt-4-turbo",
+    response = client.chat.completions.create(model="gpt-4",
     messages=[{"role": "user", "content": question}],
     temperature=0.2,
     max_tokens=500)
