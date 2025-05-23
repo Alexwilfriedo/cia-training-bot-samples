@@ -1,7 +1,6 @@
 import os
 from openai import OpenAI
 
-client = OpenAI(api_key=OPENAI_API_KEY)
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from dotenv import load_dotenv
@@ -18,6 +17,8 @@ WELCOME_MESSAGE = (
     "Je t'aide dans ta maîtrise des sujets relatifs au CIA. "
     "Tu peux me poser toutes tes questions et je ferai de mon mieux pour y répondre."
 )
+
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Handler pour la commande /start
 
