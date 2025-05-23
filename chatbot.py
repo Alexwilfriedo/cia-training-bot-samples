@@ -13,10 +13,12 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 # Message de bienvenue personnalisé
 WELCOME_MESSAGE = (
-    "👋 Bonjour ! Je suis le bot CIA 🤖.\n\n"
-    "Je t'aide dans ta maîtrise des sujets relatifs au CIA. "
-    "Tu peux me poser toutes tes questions et je ferai de mon mieux pour y répondre."
+    "👋 Bonjour et bienvenue !\n\n"
+    "Je suis le bot *CIA Assistant*, spécialisé dans la **certification CIA (Certified Internal Auditor)**. "
+    "Tu peux me poser toutes les questions en lien avec cette certification — que ce soit sur les parties, le programme, les exigences, ou les bonnes pratiques de préparation.\n\n"
+    "Je ferai de mon mieux pour te répondre de manière claire et pertinente."
 )
+
 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
@@ -30,8 +32,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def get_chatgpt_response(question):
+    system_context = (
+        "Tu es un assistant spécialisé dans la certification CIA (Certified Internal Auditor). "
+        "Toutes les réponses que tu donnes doivent être liées à ce domaine, incluant les examens, les contenus des parties, les pratiques d’audit, les exigences de l'IIA, etc."
+    )
+
     response = client.chat.completions.create(model="gpt-4",
-    messages=[{"role": "user", "content": question}],
+                                              messages=[{"role": "system", "content": system_context}, {
+                                                  "role": "user", "content": question}],
     temperature=0.2,
     max_tokens=500)
     return response.choices[0].message.content.strip()
