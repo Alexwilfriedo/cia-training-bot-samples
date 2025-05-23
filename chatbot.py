@@ -37,7 +37,7 @@ def get_chatgpt_response(question):
         "Toutes les réponses que tu donnes doivent être liées à ce domaine, incluant les examens, les contenus des parties, les pratiques d’audit, les exigences de l'IIA, etc."
     )
 
-    response = client.chat.completions.create(model="gpt-4",
+    response = client.chat.completions.create(model="gpt-4.1",
                                               messages=[{"role": "system", "content": system_context}, {
                                                   "role": "user", "content": question}],
     temperature=0.2,
