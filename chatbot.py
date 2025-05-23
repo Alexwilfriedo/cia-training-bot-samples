@@ -1,5 +1,7 @@
 import os
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=OPENAI_API_KEY)
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from dotenv import load_dotenv
@@ -9,7 +11,6 @@ load_dotenv()
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-openai.api_key = OPENAI_API_KEY
 
 # Message de bienvenue personnalisé
 WELCOME_MESSAGE = (
@@ -28,12 +29,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def get_chatgpt_response(question):
-    response = openai.ChatCompletion.create(
-        model="gpt-4-turbo",
-        messages=[{"role": "user", "content": question}],
-        temperature=0.2,
-        max_tokens=500,
-    )
+    response = client.chat.completions.create(model="gpt-4-turbo",
+    messages=[{"role": "user", "content": question}],
+    temperature=0.2,
+    max_tokens=500)
     return response.choices[0].message.content.strip()
 
 # Handler pour gérer tous les messages utilisateurs
